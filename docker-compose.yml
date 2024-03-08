@@ -1,0 +1,48 @@
+version: "3"
+services:
+  # TODO add rabbitMQ and add more network rules
+
+  api-gateway:
+    container_name: api-gateway
+    image: apigateway:test5
+    restart: always
+    ports:
+      - 8080:8080
+    environment:
+      TEST_ENV_VALUE: test
+    networks:
+      - y-netwerk
+
+  authentication-service:
+    container_name: authentication-service
+    image: authentication-service:test4
+    restart: always
+    ports:
+      - 8081:8081
+    environment:
+      TEST_ENV_VALUE: test
+    networks:
+      - y-netwerk
+
+  frontend:
+    container_name: frontend-y
+    image: frontendy:test1
+    restart: always
+    ports:
+      - 3000:3000
+    environment:
+      TEST_ENV_VALUE: test
+    networks:
+      - y-netwerk
+
+  rabbitmq:
+    image: rabbitmq:management
+    ports:
+      - 5672:5672
+      - 15672:15672
+
+networks:
+  y-netwerk:
+
+volumes:
+  y-data:
